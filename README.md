@@ -1,26 +1,18 @@
-# your-project-name
+# Pipeline tokenizer private data vault.
 
-This repo template allows you to create a repo for your project pipelines
+This repo allows you to create a Azure Devops project pipelines
 
 ## How to use this template
 
 You need to create before in infra this resources:
 
-* vm agent
-* key vault
+# TODO
 
 You need to add to the key vault at least this secrets:
 
 * azure-devops-github-ro-TOKEN
 * azure-devops-github-pr-TOKEN
-* azure-devops-github-EMAIL
-* azure-devops-github-USERNAME
-* TENANTID
-* DEV-SUBSCRIPTION-ID
-* UAT-SUBSCRIPTION-ID
-* PROD-SUBSCRIPTION-ID
-* le-private-key-json
-* le-regr-json
+* TODO
 
 ## Github bot
 
