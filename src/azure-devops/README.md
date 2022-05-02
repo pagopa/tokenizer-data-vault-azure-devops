@@ -1,93 +1,49 @@
-# Azure DevOps
-
-This folder is for managing **Azure DevOps** projects and pipelines.
-
 ## Requirements
 
-### 1. terraform
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.1.5 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.10.0 |
+| <a name="requirement_azuredevops"></a> [azuredevops](#requirement\_azuredevops) | = 0.1.8 |
 
-In order to manage the suitable version of terraform it is strongly recommended to install the following tool:
+## Providers
 
-- [tfenv](https://github.com/tfutils/tfenv): **Terraform** version manager inspired by rbenv.
+| Name | Version |
+|------|---------|
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 4.10.0 |
+| <a name="provider_aws.prod"></a> [aws.prod](#provider\_aws.prod) | ~> 4.10.0 |
+| <a name="provider_azuredevops"></a> [azuredevops](#provider\_azuredevops) | = 0.1.8 |
 
-Once these tools have been installed, install the terraform version shown in:
+## Modules
 
-- .terraform-version
+| Name | Source | Version |
+|------|--------|---------|
+| <a name="module_ecs_tokenizer_deploy"></a> [ecs\_tokenizer\_deploy](#module\_ecs\_tokenizer\_deploy) | git::https://github.com/pagopa/azuredevops-tf-modules.git//azuredevops_build_definition_deploy?ref=v2.0.5 |  |
 
-After installation install terraform:
+## Resources
 
-```sh
-tfenv install
-```
+| Name | Type |
+|------|------|
+| [azuredevops_project.this](https://registry.terraform.io/providers/microsoft/azuredevops/0.1.8/docs/resources/project) | resource |
+| [azuredevops_project_features.features](https://registry.terraform.io/providers/microsoft/azuredevops/0.1.8/docs/resources/project_features) | resource |
+| [azuredevops_serviceendpoint_aws.prod_serviceendpoint](https://registry.terraform.io/providers/microsoft/azuredevops/0.1.8/docs/resources/serviceendpoint_aws) | resource |
+| [azuredevops_serviceendpoint_aws.uat_serviceendpoint](https://registry.terraform.io/providers/microsoft/azuredevops/0.1.8/docs/resources/serviceendpoint_aws) | resource |
+| [azuredevops_serviceendpoint_github.github_pr](https://registry.terraform.io/providers/microsoft/azuredevops/0.1.8/docs/resources/serviceendpoint_github) | resource |
+| [azuredevops_serviceendpoint_github.github_ro](https://registry.terraform.io/providers/microsoft/azuredevops/0.1.8/docs/resources/serviceendpoint_github) | resource |
+| [aws_secretsmanager_secret.devops_prod](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret) | data source |
+| [aws_secretsmanager_secret.devops_uat](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret) | data source |
+| [aws_secretsmanager_secret_version.devops_prod](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
+| [aws_secretsmanager_secret_version.devops_uat](https://registry.terraform.io/providers/hashicorp/aws/latest/docs/data-sources/secretsmanager_secret_version) | data source |
 
-### 2. Azure CLI
+## Inputs
 
-In order to authenticate to Azure portal and manage terraform state it's necessary to install and login to Azure subscription.
+| Name | Description | Type | Default | Required |
+|------|-------------|------|---------|:--------:|
+| <a name="input_ms-tokenizer"></a> [ms-tokenizer](#input\_ms-tokenizer) | git repo ms-person service | `map` | <pre>{<br>  "pipeline": {<br>    "enable_code_review": true,<br>    "enable_deploy": true<br>  },<br>  "repository": {<br>    "branch_name": "refs/heads/main",<br>    "name": "pdv-ms-tokenizer",<br>    "organization": "pagopa",<br>    "pipelines_path": ".devops",<br>    "yml_prefix_name": null<br>  }<br>}</pre> | no |
+| <a name="input_project_description"></a> [project\_description](#input\_project\_description) | n/a | `string` | `"DevOps project for tokenizer data vault."` | no |
+| <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Azure devops project name | `string` | `"tokenizer-data-vault-projects"` | no |
+| <a name="input_region"></a> [region](#input\_region) | AWS default region | `string` | `"eu-south-1"` | no |
 
-- [Azure CLI](https://docs.microsoft.com/it-it/cli/azure/install-azure-cli)
+## Outputs
 
-After installation login to Azure:
-
-```sh
-az login
-```
-
-### 3. Azure DevOps Personal Access Token
-
-In order to authenticate to Azure DevOps ad manage pipelines you need to create and set a Personal Access Token.
-
-- [Azure DevOps Personal Access Token](https://docs.microsoft.com/en-us/azure/devops/organizations/accounts/use-personal-access-tokens-to-authenticate)
-
-After create your token export it, for example in your bash_profile
-
-```sh
-# .bash_profile
-export AZDO_ORG_SERVICE_URL="https://dev.azure.com/pagopa-io"
-export AZDO_PERSONAL_ACCESS_TOKEN="__YOUR_PERSONAL_ACCESS_TOKEN__"
-```
-
-AZDO_ORG_SERVICE_URL can be with `pagopa-io` or the new `pagopaspa`
-
-## How to
-
-Create a new project or a pipeline into appropriate directory.
-
-```bash
-    .
-    ├── ...
-    ├── new-azuredevops-projects
-    │ ├── project.tf
-    │ ├── provider.tf
-    │ ├── secrets.tf
-    │ ├── service_connections.tf
-    │ ├── time_sleep.tf
-    │ ├── github_repo_name_1.tf     # all pipelines in github_repo_name_1
-    │ ├── ...
-    │ └── github_repo_name_n.tf     # all pipelines in github_repo_name_n
-    └── ...
-```
-
-1. if your project contains more github repos add all pipelines in the same azure devops project
-2. for each github repo create a new file with github repo name
-3. put all github repo pipelines into same file `github_repo_name_1.tf`
-4. put all pipelines variables at beginning of `github_repo_name_1.tf`
-
-⚠️ **Very Important**
-
-Before apply any changes be sure that permissions on github repo are set as follow:
-
-1. user `pagopa-github-bot` -> Role: admin
-
-### Apply changes
-
-To apply changes follow the standard terraform lifecycle once the code in this repository has been changed:
-
-```sh
-az account set --subscription PROD-IO
-
-terraform init
-
-terraform plan
-
-terraform apply
-```
+No outputs.

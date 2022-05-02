@@ -30,6 +30,6 @@ provider "aws" {
 # todo: change this for production
 provider "aws" {
   alias   = "prod"
-  profile = "ppa-tokenizer-data-vault-uat"
+  profile = "ppa-tokenizer-data-vault-prod"
   region  = var.region
 }
