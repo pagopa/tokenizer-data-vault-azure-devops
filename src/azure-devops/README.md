@@ -19,6 +19,7 @@
 | Name | Source | Version |
 |------|--------|---------|
 | <a name="module_ecs_tokenizer_deploy"></a> [ecs\_tokenizer\_deploy](#module\_ecs\_tokenizer\_deploy) | git::https://github.com/pagopa/azuredevops-tf-modules.git//azuredevops_build_definition_deploy?ref=v2.0.5 |  |
+| <a name="module_template-pipeline-microservice_code_review"></a> [template-pipeline-microservice\_code\_review](#module\_template-pipeline-microservice\_code\_review) | git::https://github.com/pagopa/azuredevops-tf-modules.git//azuredevops_build_definition_code_review?ref=v2.0.5 |  |
 
 ## Resources
 
@@ -43,6 +44,7 @@
 | <a name="input_project_description"></a> [project\_description](#input\_project\_description) | n/a | `string` | `"DevOps project for tokenizer data vault."` | no |
 | <a name="input_project_name"></a> [project\_name](#input\_project\_name) | Azure devops project name | `string` | `"tokenizer-data-vault-projects"` | no |
 | <a name="input_region"></a> [region](#input\_region) | AWS default region | `string` | `"eu-south-1"` | no |
+| <a name="input_sonarcloud"></a> [sonarcloud](#input\_sonarcloud) | # Sonar cloud | <pre>object({<br>    id                 = string<br>    organization       = string<br>    service_connection = string<br>    project_key        = string<br>  })</pre> | <pre>{<br>  "id": "0537c8f3-f2d2-43ce-a39d-64e9c511f95f",<br>  "organization": "pagopa",<br>  "project_key": "pagopa_pdv-ms-tokenizer",<br>  "service_connection": "SONARCLOUD-SERVICE-CONN"<br>}</pre> | no |
 
 ## Outputs
 
