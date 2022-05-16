@@ -31,3 +31,19 @@ variable "ms-tokenizer" {
     }
   }
 }
+
+## Sonar cloud
+variable "sonarcloud" {
+  type = object({
+    id                 = string
+    organization       = string
+    service_connection = string
+    project_key        = string
+  })
+  default = {
+    id                 = "0537c8f3-f2d2-43ce-a39d-64e9c511f95f"
+    organization       = "pagopa"
+    service_connection = "SONARCLOUD-SERVICE-CONN"
+    project_key        = "pagopa_pdv-ms-tokenizer"
+  }
+}
